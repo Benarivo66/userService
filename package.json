@@ -1,0 +1,33 @@
+{
+  "name": "userservice",
+  "version": "1.0.0",
+  "description": "userService for gRPC server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client_start": "node client.js",
+    "client": "nodemon client.js"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.5.10",
+    "db-methods": "/Users/Mac/Documents/gRPC_Server/grpc_server_database",
+    "dotenv": "^16.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "service-specs": "/Users/Mac/Documents/gRPC_Server/service_specs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthony-deca/userService.git"
+  },
+  "author": "Anthony Izekor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anthony-deca/userService/issues"
+  },
+  "homepage": "https://github.com/anthony-deca/userService#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
