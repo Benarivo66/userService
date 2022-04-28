@@ -58,5 +58,12 @@ module.exports = {
             return { message: 'user not found' };
         }
         return user;
+    },
+    async deleteOne({_id}){
+        const user = await userDBMethods.update(_id, { deleted: true });
+        if(!user){
+            return { message: 'user not found' };
+        }
+        return user;
     }
 }

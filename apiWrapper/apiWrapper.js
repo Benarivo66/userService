@@ -34,7 +34,16 @@ class ApiWrapper {
         } catch (error) {
             callback({error: error.message});
         }
-    } 
+    }
+    async deleteOne(call, callback){
+        try {
+            const result = await businessLogic.deleteOne(call.request);
+            callback(undefined, result);
+        } catch (error) {
+            callback({error: error.message});
+        }
+    }
+     
 
 }
 
