@@ -43,7 +43,14 @@ class ApiWrapper {
             callback({error: error.message});
         }
     }
-     
+    async update(call, callback){
+        try {
+            const result = await businessLogic.update(call.request);
+            callback(undefined, result);
+        } catch (error) {
+            callback({error: error.message});
+        }
+    }    
 
 }
 

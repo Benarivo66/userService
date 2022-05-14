@@ -65,5 +65,22 @@ module.exports = {
             return { message: 'user not found' };
         }
         return user;
-    }
+    },
+    async update({_id, email, isAdmin}){
+        const user = await userDBMethods.getOne(_id);
+
+        if(!user){
+            throw new Error("not working")
+        }
+
+        user.email = email;
+        user.isAdmin = isAdmin;
+        
+        await userDBMethods.update(_id, {...user});
+        
+        return user;
+    },  
+
+   
+      
 }
