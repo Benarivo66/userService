@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
-const Auth = require('../Helper/auth')
+const grpc = require('@grpc/grpc-js');
 const { userDBMethods } = require('db-methods');
+const Auth = require('../Helper/auth')
+const ServerError = require('service-specs').ServerError;
 
 const tokenKey = process.env.TOKEN_KEY;
 
@@ -10,7 +12,7 @@ module.exports = {
 
         let user = await userDBMethods.getByEmail(email);
         if(user) {
-            return { message: 'User already exists' }
+            throw new ServerError(grpc.status.ALREADY_EXISTS, 'user already exists');
         };   
         const userFields = {
             email,
@@ -29,11 +31,11 @@ module.exports = {
         const user = await userDBMethods.getByEmail(email);
 
         if(!user){
-            return { message: 'Invalid Credentials' }
+            throw new ServerError(grpc.status.INVALID_ARGUMENT, 'email does not exist');
         }
         const isVerified = await Auth.verify(password, user.password);
         if(!isVerified){
-            return { message: 'enter a valid password' }
+            throw new ServerError(grpc.status.INVALID_ARGUMENT, 'Password does not match');
         }
         const token = jwt.sign({email, id: user._id}, tokenKey, {
             expiresIn: '1h'
@@ -46,7 +48,7 @@ module.exports = {
         const users = await userDBMethods.getAll();
 
         if(!users){
-            return { message: 'no user found' };
+            throw new ServerError(grpc.status.NOT_FOUND, 'user does not exist');
         }
         
         return users;
@@ -55,14 +57,14 @@ module.exports = {
         const user = await userDBMethods.getOne(_id);
 
         if(!user){
-            return { message: 'user not found' };
+            throw new ServerError(grpc.status.NOT_FOUND, 'user does not exist');
         }
         return user;
     },
     async deleteOne({_id}){
         const user = await userDBMethods.update(_id, { deleted: true });
         if(!user){
-            return { message: 'user not found' };
+            throw new ServerError(grpc.status.NOT_FOUND, 'user does not exist');
         }
         return user;
     },
@@ -70,7 +72,7 @@ module.exports = {
         const user = await userDBMethods.getOne(_id);
 
         if(!user){
-            throw new Error("not working")
+            throw new ServerError(grpc.status.NOT_FOUND, 'user does not exist');
         }
 
         user.email = email;

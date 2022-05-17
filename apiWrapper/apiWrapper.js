@@ -1,4 +1,5 @@
 const businessLogic = require('../businessLogic/index');
+const GrpcHelper = require('service-specs').GrpcHelper;
 
 class ApiWrapper {
     constructor() {}
@@ -8,7 +9,7 @@ class ApiWrapper {
             const result = await businessLogic.create(call.request);
             callback(undefined, result);
         } catch (error) {
-            callback({error: error.message});
+            GrpcHelper.respondWithError(error, callback);
         }
     } 
     async login(call, callback){
@@ -16,7 +17,7 @@ class ApiWrapper {
             const result = await businessLogic.login(call.request);
             callback(undefined, result);
         } catch (error) {
-            callback({error: error.message});
+            GrpcHelper.respondWithError(error, callback);
         }
     }
     async getAll(call, callback){
@@ -24,7 +25,7 @@ class ApiWrapper {
             const result = await businessLogic.getAll(call.request);
             callback(undefined, { users: result });
         } catch (error) {
-            callback({error: error.message});
+            GrpcHelper.respondWithError(error, callback);
         }
     }
     async getOne(call, callback){
@@ -32,7 +33,7 @@ class ApiWrapper {
             const result = await businessLogic.getOne(call.request);
             callback(undefined, result);
         } catch (error) {
-            callback({error: error.message});
+            GrpcHelper.respondWithError(error, callback);
         }
     }
     async deleteOne(call, callback){
@@ -40,7 +41,7 @@ class ApiWrapper {
             const result = await businessLogic.deleteOne(call.request);
             callback(undefined, result);
         } catch (error) {
-            callback({error: error.message});
+            GrpcHelper.respondWithError(error, callback);
         }
     }
     async update(call, callback){
@@ -48,7 +49,7 @@ class ApiWrapper {
             const result = await businessLogic.update(call.request);
             callback(undefined, result);
         } catch (error) {
-            callback({error: error.message});
+            GrpcHelper.respondWithError(error, callback);
         }
     }    
 
