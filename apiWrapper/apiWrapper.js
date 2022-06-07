@@ -51,7 +51,23 @@ class ApiWrapper {
         } catch (error) {
             GrpcHelper.respondWithError(error, callback);
         }
-    }    
+    }
+    async getContestants(call, callback){
+        try {
+            const result = await businessLogic.getContestants(call.request);
+            callback(undefined, { users: result });
+        } catch (error) {
+            GrpcHelper.respondWithError(error, callback);
+        }
+    }
+    async getTopRankings(call, callback){
+        try {
+            const result = await businessLogic.getTopRankings(call.request);
+            callback(undefined, { users: result });
+        } catch (error) {
+            GrpcHelper.respondWithError(error, callback);
+        }
+    }       
 
 }
 

@@ -14,7 +14,10 @@
     "@grpc/grpc-js": "^1.5.10",
     "db-methods": "/Users/Mac/Documents/gRPC_Server/grpc_server_database",
     "dotenv": "^16.0.0",
+    "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
+    "paystack": "^2.0.1",
+    "request": "^2.88.2",
     "service-specs": "/Users/Mac/Documents/gRPC_Server/service_specs"
   },
   "repository": {
