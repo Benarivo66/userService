@@ -1,5 +1,6 @@
 const businessLogic = require('../businessLogic/index');
 const GrpcHelper = require('service-specs').GrpcHelper;
+const { authenticate, authorize } = require('../Helper/authenticate');
 
 class ApiWrapper {
     constructor() {}
@@ -22,6 +23,7 @@ class ApiWrapper {
     }
     async getAll(call, callback){
         try {
+            authenticate(call, callback);
             const result = await businessLogic.getAll(call.request);
             callback(undefined, { users: result });
         } catch (error) {
@@ -30,6 +32,7 @@ class ApiWrapper {
     }
     async getOne(call, callback){
         try {
+            authenticate(call, callback);
             const result = await businessLogic.getOne(call.request);
             callback(undefined, result);
         } catch (error) {
@@ -38,6 +41,7 @@ class ApiWrapper {
     }
     async deleteOne(call, callback){
         try {
+            authenticate(call, callback);
             const result = await businessLogic.deleteOne(call.request);
             callback(undefined, result);
         } catch (error) {
@@ -46,6 +50,8 @@ class ApiWrapper {
     }
     async update(call, callback){
         try {
+            authenticate(call, callback);
+            authorize(call, callback);
             const result = await businessLogic.update(call.request);
             callback(undefined, result);
         } catch (error) {
@@ -54,6 +60,7 @@ class ApiWrapper {
     }
     async getContestants(call, callback){
         try {
+            authenticate(call, callback);
             const result = await businessLogic.getContestants(call.request);
             callback(undefined, { users: result });
         } catch (error) {
@@ -62,12 +69,22 @@ class ApiWrapper {
     }
     async getTopRankings(call, callback){
         try {
+            authenticate(call, callback);
             const result = await businessLogic.getTopRankings(call.request);
             callback(undefined, { users: result });
         } catch (error) {
             GrpcHelper.respondWithError(error, callback);
         }
-    }       
+    } 
+       async logout(call, callback){
+        try {
+            //authenticate(call, callback);
+            const result = await businessLogic.logout(call.request);
+            callback(undefined, result );
+        } catch (error) {
+            GrpcHelper.respondWithError(error, callback);
+        }
+    }  
 
 }
 

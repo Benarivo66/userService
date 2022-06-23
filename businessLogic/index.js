@@ -110,11 +110,14 @@ module.exports = {
         };
 
         return users;
+    },
+
+    async logout(){
+        return {
+            message: 'cookies have been cleared'
+        }
     }
 }
 
-/*
-May have to pass magic token directly as an argument
-see all the possible ways of storing logged in user data in express
-**/
+
 
